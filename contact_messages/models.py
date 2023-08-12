@@ -1,6 +1,6 @@
 from django.db import models
 
-class ContactMessages(models.Model):
+class ContactMessage(models.Model):
   contact_name = models.CharField(max_length=128, blank=True, null=True)
   contact_email = models.CharField(max_length=128, blank=True, null=True)
   contact_phone = models.CharField(max_length=128, blank=True, null=True)
