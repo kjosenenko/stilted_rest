@@ -4,4 +4,4 @@ from .models import Show
 class ShowSerializer(serializers.ModelSerializer):
   class Meta:
     model = Show
-    fields = ['id', 'venue', 'presale_link', 'has_presale', 'supporting_acts', 'show_time', 'show_date']
+    fields = ['id', 'venue', 'presale_link', 'has_presale', 'supporting_acts', 'show_date_time']
