@@ -10,4 +10,4 @@ class Show(models.Model):
   show_date_time = models.DateTimeField(auto_now=False, auto_now_add=False, null=True)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
-  image = models.ImageField(storage=fs, null=True)
+  image = models.ImageField(upload_to="shows", null=True)
