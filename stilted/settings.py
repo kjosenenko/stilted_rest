@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-1ann9^h0s(8$e2763$$t&blc8j#06j^=awm*7-jdx&%_)is&v#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['api.stiltedband.com']
 
 
 # Application definition
