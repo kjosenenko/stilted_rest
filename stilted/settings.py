@@ -32,7 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['api.stiltedband.com','localhost']
 CSRF_TRUSTED_ORIGINS = ['https://api.stiltedband.com']
-CORS_ORIGIN_WHITELIST = ['https://api.stiltedband.com']
+CORS_ORIGIN_WHITELIST = ['https://api.stiltedband.com', 'https://stiltedband.com/']
 
 
 # Application definition
