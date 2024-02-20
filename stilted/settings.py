@@ -32,7 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['api.stiltedband.com','localhost']
 CSRF_TRUSTED_ORIGINS = ['https://api.stiltedband.com']
-CORS_ORIGIN_WHITELIST = ['https://api.stiltedband.com']
+CORS_ORIGIN_WHITELIST = ['https://api.stiltedband.com','https://stiltedband.com']
 
 
 # Application definition
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'shows',
     'submissions',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'stilted.urls'
