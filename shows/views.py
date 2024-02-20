@@ -16,7 +16,7 @@ def shows(request):
 def past_shows(request):
   if request.method == 'GET':
     today = localdate()
-    shows = Show.objects.filter(show_date_time__lte=today).extra(order_by=['show_date_time']).reverse()
+    shows = Show.objects.filter(show_date_time__lt=today).extra(order_by=['show_date_time']).reverse()
     serializer = ShowSerializer(shows, many=True)
     return JsonResponse(serializer.data, safe=False)
   else:
