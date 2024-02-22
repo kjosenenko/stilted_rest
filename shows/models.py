@@ -1,7 +1,7 @@
 from django.core.files.storage import FileSystemStorage
 from django.db import models
-from django.core.cache import cache
 from django.utils.timezone import localdate
+import os
 
 fs = FileSystemStorage(location="/tmp/pyhon_media")
 
@@ -23,11 +23,9 @@ class Show(models.Model):
     return Show.objects.filter(show_date_time__lt=today).extra(order_by=['show_date_time']).reverse()
   
   def cleanup():
-    t = 2419200
-    if cache.get('recently_run') == 'true':
-      return
-    else:
-      cache.set('recently_run', 'true', 10)
-      have_images = Show.past_shows().exclude(image='')
-      breakpoint()
+    shows = Show.past_shows().exclude(image='')
+    for show in shows:
+      os.remove(show.image.path)
+      show.image=''
+      show.save()
     
