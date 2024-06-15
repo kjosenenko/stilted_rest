@@ -8,7 +8,13 @@ from .serializers import SubmissionSerializer
 def submit(request):
   if request.method == 'POST':
     data = JSONParser().parse(request)
-    serializer = SubmissionSerializer(data=data['data'])
+    
+    # Comment in for React client.
+    # serializer = SubmissionSerializer(data=data['data'])
+    
+    # Comment in for Vue client.
+    serializer = SubmissionSerializer(data=data)
+    
     if serializer.is_valid():
       serializer.save()
       return JsonResponse(serializer.data, status=201)

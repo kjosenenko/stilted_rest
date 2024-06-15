@@ -31,8 +31,8 @@ SECRET_KEY = 'django-insecure-1ann9^h0s(8$e2763$$t&blc8j#06j^=awm*7-jdx&%_)is&v#
 DEBUG = True
 
 ALLOWED_HOSTS = ['api.stiltedband.com','localhost']
-CSRF_TRUSTED_ORIGINS = ['https://api.stiltedband.com']
-CORS_ORIGIN_WHITELIST = ['https://api.stiltedband.com','https://stiltedband.com']
+CSRF_TRUSTED_ORIGINS = ['https://api.stiltedband.com', 'http://localhost:5173']
+CORS_ORIGIN_WHITELIST = ['https://api.stiltedband.com','https://stiltedband.com', 'http://localhost:5173']
 
 
 # Application definition
