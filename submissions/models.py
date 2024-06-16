@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 class Submission(models.Model):
   contact_name = models.CharField(max_length=128, blank=True, null=True)
@@ -24,7 +26,7 @@ def send_email(sender, instance, **kwargs):
   smtp_server = "smtp.gmail.com"
   sender_email = "stilted.band@gmail.com"  # Enter your address
   receiver_email = "stilted.band@gmail.com"  # Enter receiver address
-  password = "" # Enter password
+  password = "qrxx zizc qcnh lzda" # Enter password
   message = MIMEMultipart("alternative")
   message["Subject"] = instance.message_subject
   message["From"] = sender_email
