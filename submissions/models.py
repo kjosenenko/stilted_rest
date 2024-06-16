@@ -16,17 +16,12 @@ class Submission(models.Model):
   
 @receiver(post_save, sender=Submission)
 def send_email(sender, instance, **kwargs):
-  print(instance.contact_name)
-  print(instance.contact_email)
-  print(instance.contact_phone)
-  print(instance.message_subject)
-  print(instance.message_body)
   
   port = 465  # For SSL
   smtp_server = "smtp.gmail.com"
   sender_email = "stilted.band@gmail.com"  # Enter your address
   receiver_email = "stilted.band@gmail.com"  # Enter receiver address
-  password = "qrxx zizc qcnh lzda" # Enter password
+  password = "" # Enter password
   message = MIMEMultipart("alternative")
   message["Subject"] = instance.message_subject
   message["From"] = sender_email
