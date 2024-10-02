@@ -4,6 +4,7 @@ from django.dispatch import receiver
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from bands.models import Band
 
 class Submission(models.Model):
   contact_name = models.CharField(max_length=128, blank=True, null=True)
@@ -13,6 +14,7 @@ class Submission(models.Model):
   message_body = models.TextField(blank=True, null=True)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
+  band = models.ForeignKey(Band, on_delete=models.CASCADE)
   
 @receiver(post_save, sender=Submission)
 def send_email(sender, instance, **kwargs):

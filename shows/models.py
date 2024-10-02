@@ -1,6 +1,7 @@
 from django.core.files.storage import FileSystemStorage
 from django.db import models
 from django.utils.timezone import localdate
+from bands.models import Band
 import os
 
 fs = FileSystemStorage(location="/tmp/pyhon_media")
@@ -13,6 +14,7 @@ class Show(models.Model):
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
   image = models.ImageField(upload_to="shows", null=True)
+  band = models.ForeignKey(Band, on_delete=models.CASCADE)
   
   def current_shows():
     today = localdate()
