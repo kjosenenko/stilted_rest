@@ -14,5 +14,6 @@ class Band(models.Model):
   bio = models.TextField(blank=True)
   cover_photo = models.ImageField(upload_to="bands", null=True, blank=True)
   logo = models.ImageField(upload_to="bands", null=True, blank=True)
+  using_react = models.BooleanField(default=False)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
