@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'shows',
     'submissions',
     'corsheaders',
-    'bands'
+    'bands',
+    'contacts'
 ]
 
 MIDDLEWARE = [
