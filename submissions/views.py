@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from bands.models import Band
+from .forms import Submission
 
 @csrf_exempt
 def submit(request):
@@ -10,20 +11,17 @@ def submit(request):
     data = JSONParser().parse(request)
     host = request.headers['X-Forwarded-Host']
     band_id = Band.objects.get(url=host).id
-    # data['data']['band_id'] = band_id
-    breakpoint()
+    data['data']['band_id'] = band_id
     
     # Comment in for React client.
-    # serializer = SubmissionSerializer(data=data['data'])
+    form = Submission(data['data'])
 
     # Comment in for Vue client.
-    # serializer = SubmissionSerializer(data=data)
-    return JsonResponse(data, status=201)
+    # form = Submission(data)
 
     
-  #   if serializer.is_valid():
-  #     serializer.save()
-  #     return JsonResponse(serializer.data, status=201)
-  #   return JsonResponse(serializer.errors, status=400)
-  # else:
-  #   return JsonResponse(serializer.errors, status=400)
+    if form.is_valid():
+      Submission.send_email(form)
+      return JsonResponse(data, status=201)
+    else:
+      return JsonResponse(form.errors, status=400)
