@@ -20,7 +20,6 @@ def contact(request):
         data['band_id'] = band.id
         form = ContactForm(data)
 
-      
       if form.is_valid():
         ContactForm.send_email(form)
         return JsonResponse(data, status=202)
