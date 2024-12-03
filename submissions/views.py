@@ -8,20 +8,24 @@ from .forms import Submission
 @csrf_exempt
 def submit(request):
   if request.method == 'POST':
-    data = JSONParser().parse(request)
-    host = request.headers['X-Forwarded-Host']
-    band_id = Band.objects.get(url=host).id
-    data['data']['band_id'] = band_id
-    
-    # Comment in for React client.
-    form = Submission(data['data'])
+    try: 
+      data = JSONParser().parse(request)
+      host = request.headers['X-Forwarded-Host']
+      band = Band.objects.get(url=host)
+      
+      if band.using_react:
+        data['data']['band_id'] = band.id
+        form = Submission(data['data'])
+      else:
+        data['band_id'] = band.id
+        form = Submission(data)
 
-    # Comment in for Vue client.
-    # form = Submission(data)
-
-    
-    if form.is_valid():
-      Submission.send_email(form)
-      return JsonResponse(data, status=201)
-    else:
-      return JsonResponse(form.errors, status=400)
+      
+      if form.is_valid():
+        Submission.send_email(form)
+        return JsonResponse(data, status=202)
+      else:
+        return JsonResponse(form.errors, status=406)
+    except:
+      # This is porbably because a band was not found for the host.  Either a band is configured wrong or the origin is suspect.
+      JsonResponse("An error occurred.", status=400)
