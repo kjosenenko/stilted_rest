@@ -2,19 +2,19 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-from bands.models import Band
+from bands.managers import BandManager
 from .forms import ContactForm
 from .managers import ContactManager
 
 @csrf_exempt
 def contact(request):
   if request.method == 'POST':
-    try:
-      data = JSONParser().parse(request)
-      host = request.headers['Origin']
-      # host = request.headers['X-Forwarded-Host']
-      band = Band.objects.get(url=host)
-      
+    data = JSONParser().parse(request)
+    band = BandManager.find_by_request(request)
+    
+    if not band:
+      return JsonResponse({"error": "Band not found."}, status=404)
+    else:
       if band.using_react:
         data['data']['band_id'] = band.id
         data = data['data']
@@ -27,7 +27,3 @@ def contact(request):
         return JsonResponse(data, status=202)
       else:
         return JsonResponse(form.errors, status=406)
-    except:
-      # This is porbably because a band was not found for the host.  Either a band is configured wrong or the origin is suspect.
-      JsonResponse("An error occurred.", status=400)
-
