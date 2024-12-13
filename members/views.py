@@ -4,7 +4,7 @@ from .managers import MemberManager
 from .serializers import MemberSerializer
 from bands.managers import BandManager
 
-def band_members(request):
+def members(request):
   if request.method == 'GET':
     band = BandManager.find_by_request(request)
     if not band:
