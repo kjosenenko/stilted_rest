@@ -13,6 +13,7 @@ def contact(request):
     band = BandManager.find_by_request(request)
     
     if not band:
+      # Either a band is not configured with the correct URL or the request is coming from a suspect source.
       return JsonResponse({"error": "Band not found."}, status=404)
     else:
       if band.using_react:
