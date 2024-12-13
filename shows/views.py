@@ -12,8 +12,6 @@ def shows(request):
     else:
       serializer = ShowSerializer(ShowManager.current_shows_for_band(band), many=True)
       return JsonResponse(serializer.data, safe=False)
-  else:
-    return JsonResponse(serializer.errors, status=400)
 
 def past_shows(request):
   if request.method == 'GET':
@@ -23,5 +21,3 @@ def past_shows(request):
     else:
       serializer = ShowSerializer(ShowManager.past_shows_for_band(band), many=True)
       return JsonResponse(serializer.data, safe=False)
-  else:
-    return JsonResponse(serializer.errors, status=400)
