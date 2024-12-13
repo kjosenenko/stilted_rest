@@ -8,13 +8,13 @@ fs = FileSystemStorage(location="/tmp/pyhon_media")
 
 class ShowManager(models.Manager):
   
-  def current_shows():
+  def current_shows_for_band(band):
     today = localdate()
-    return Show.objects.filter(show_date_time__gte=today).extra(order_by=['show_date_time']).reverse()
+    return Show.objects.filter(band=band).filter(show_date_time__gte=today).extra(order_by=['show_date_time']).reverse()
     
-  def past_shows():
+  def past_shows_for_band(band):
     today = localdate()
-    return Show.objects.filter(show_date_time__lt=today).extra(order_by=['show_date_time']).reverse()
+    return Show.objects.filter(band=band).filter(show_date_time__lt=today).extra(order_by=['show_date_time']).reverse()
   
   def cleanup():
     shows = Show.past_shows().exclude(image='')
