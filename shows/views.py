@@ -10,14 +10,5 @@ def shows(request):
     if not band:
       return JsonResponse({"error": "Band not found."}, status=404)
     else:
-      serializer = ShowSerializer(ShowManager.current_shows_for_band(band), many=True)
-      return JsonResponse(serializer.data, safe=False)
-
-def past_shows(request):
-  if request.method == 'GET':
-    band = BandManager.find_by_request(request)
-    if not band:
-      return JsonResponse({"error": "Band not found."}, status=404)
-    else:
-      serializer = ShowSerializer(ShowManager.past_shows_for_band(band), many=True)
+      serializer = ShowSerializer(ShowManager.shows_for_band(band), many=True)
       return JsonResponse(serializer.data, safe=False)
