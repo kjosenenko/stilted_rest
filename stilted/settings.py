@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'bands',
     'contacts',
     'members',
-    'images'
+    'images',
+    'music'
 ]
 
 MIDDLEWARE = [
