@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'bands',
     'contacts',
-    'members'
+    'members',
+    'images'
 ]
 
 MIDDLEWARE = [
