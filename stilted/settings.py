@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'contacts',
     'members',
     'images',
-    'music'
+    'music',
+    'social_media'
 ]
 
 MIDDLEWARE = [
