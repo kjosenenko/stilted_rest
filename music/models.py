@@ -3,6 +3,7 @@ from bands.models import Band
 
 class Music(models.Model):
   name = models.CharField(max_length=128, blank=True, null=True)
+  provider = models.CharField(max_length=128, blank=True, null=True)
   href = models.TextField(blank=True)
   src = models.TextField(blank=True)
   created_at = models.DateTimeField(auto_now_add=True)
