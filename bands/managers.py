@@ -16,3 +16,13 @@ class BandManager(models.Manager):
       return band
     except:
       return None
+  
+  # change this to a filter (for user) based on the many bands a user can be associated with
+  @staticmethod
+  def find_by_name(name):
+    try:
+      band = Band.objects.get(name=name)
+      return band
+    except:
+      return None
+    
