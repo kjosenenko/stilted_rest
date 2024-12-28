@@ -8,8 +8,7 @@ class MemberAdmin(admin.ModelAdmin):
   def get_queryset(self, request):
     if request.user.is_superuser:
       return Member.objects.all()
-    else: 
-      band = BandManager.find_by_name("Stilted")
-      return MemberManager.band_members(band)
+    else:
+      return MemberManager.for_user(request.user)
 
 admin.site.register(Member, MemberAdmin)
