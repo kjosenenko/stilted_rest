@@ -25,6 +25,9 @@ urlpatterns = [
     path('', include('contacts.urls')),
     path('', include('members.urls')),
     path('', include('shows.urls')),
+    path('', include('social_media.urls')),
+    path('', include('images.urls')),
+    path('', include('music.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

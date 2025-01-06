@@ -5,6 +5,12 @@ class BandManager(models.Manager):
   
   @staticmethod
   def find_by_request(request):
+    
+    # Comment in below to test in browser, you'll need to create a band named "Stilted" first
+    # band = Band.objects.get(name='Stilted')
+    # return band
+    
+    # Comment out below to test in browser
     try:
       # This would be from the react app.
       host = request.headers['X-Forwarded-Host']

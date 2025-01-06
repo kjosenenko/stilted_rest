@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from .managers import MemberManager
 from .serializers import MemberSerializer
 from bands.managers import BandManager
