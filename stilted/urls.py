@@ -26,7 +26,6 @@ urlpatterns = [
     path('', include('members.urls')),
     path('', include('shows.urls')),
     path('', include('social_media.urls')),
-    path('', include('images.urls')),
     path('', include('music.urls')),
 ]
 if settings.DEBUG:

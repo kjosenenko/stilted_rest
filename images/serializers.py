@@ -5,3 +5,4 @@ class ImageSerializer(serializers.ModelSerializer):
   class Meta:
     model = Image
     fields = ['id', 'image', 'alt']
+    depth = 1

@@ -1,7 +1,6 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from .managers import ShowManager
-from .serializers import ShowSerializer
+from .serializers import ShowSerializer, ShowsSerializer
 from bands.managers import BandManager
 
 def shows(request):
@@ -10,5 +9,14 @@ def shows(request):
     if not band:
       return JsonResponse({"error": "Band not found."}, status=404)
     else:
-      serializer = ShowSerializer(ShowManager.shows_for_band(band), many=True)
+      serializer = ShowsSerializer(ShowManager.shows_for_band(band), many=True)
+      return JsonResponse(serializer.data, safe=False)
+    
+def show(request, id):
+  if request.method == 'GET':
+    show = ShowManager.get_by_id(id)
+    if not show:
+      return JsonResponse({"error": "Show not found."}, status=404)
+    else:
+      serializer = ShowSerializer(show)
       return JsonResponse(serializer.data, safe=False)
