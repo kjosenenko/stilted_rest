@@ -1,5 +1,6 @@
 from django.db import models
 from .models import Band
+from images.serializers import ImageSerializer
 
 class BandManager(models.Manager):
   
@@ -9,8 +10,7 @@ class BandManager(models.Manager):
     # Comment in below to test in browser, you'll need to create a band named "Stilted" first
     # band = Band.objects.get(name='Stilted')
     # return band
-    
-    # Comment out below to test in browser
+
     try:
       # This would be from the react app.
       host = request.headers['X-Forwarded-Host']

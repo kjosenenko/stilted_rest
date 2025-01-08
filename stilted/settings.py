@@ -53,10 +53,7 @@ INSTALLED_APPS = [
     'images',
     'music',
     'social_media',
-    'users',
 ]
-
-AUTH_USER_MODEL = "users.CustomUser"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
