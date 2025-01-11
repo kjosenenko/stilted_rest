@@ -10,4 +10,4 @@ class ShowManager(models.Manager):
     return Show.objects.get(id=id)
   
   def shows_for_band(band):
-    return Show.objects.filter(band=band).extra(order_by=['show_date_time']).reverse()
+    return Show.objects.filter(band=band).order_by('-starts_at')

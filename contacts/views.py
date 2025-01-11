@@ -15,16 +15,12 @@ def contact(request):
     if not band:
       # Either a band is not configured with the correct URL or the request is coming from a suspect source.
       return JsonResponse({"error": "Band not found."}, status=404)
-    else:
-      if band.using_react:
-        data['data']['band_id'] = band.id
-        data = data['data']
-      else:
-        data['band_id'] = band.id
 
-      form = ContactForm(data)
-      if form.is_valid():
-        ContactManager.forward_to_band(form)
-        return JsonResponse(data, status=202)
-      else:
-        return JsonResponse(form.errors, status=406)
+    data['band_id'] = band.id
+    form = ContactForm(data)
+    
+    if form.is_valid():
+      ContactManager.forward_to_band(form)
+      return JsonResponse(data, status=202)
+    else:
+      return JsonResponse(form.errors, status=406)

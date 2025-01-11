@@ -1,16 +1,30 @@
 from rest_framework import serializers
-from .models import Show
-from images.serializers import ImageSerializer
+from .models import Show, Venue
+
+class VenueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Venue
+        fields = ['id', 'name', 'street_address', 'city', 'state', 
+                 'zip_code', 'website', 'notes']
 
 class ShowsSerializer(serializers.ModelSerializer):
-  thumbnail = ImageSerializer(many=False)
-  class Meta:
-    model = Show
-    fields = ['id', 'venue', 'presale_link', 'has_presale', 'show_date_time', 'thumbnail']
+    venue = VenueSerializer(read_only=True)
+    location = serializers.CharField(read_only=True)
+    full_address = serializers.CharField(read_only=True)
     
+    class Meta:
+        model = Show
+        fields = ['id', 'venue', 'doors_at', 'starts_at', 'ticket_price',
+                'presale_link', 'has_presale', 'age_restriction',
+                'supporting_acts', 'description', 'flyer', 'location', 'full_address']
+
 class ShowSerializer(serializers.ModelSerializer):
-  images = ImageSerializer(many=True)
-  thumbnail = ImageSerializer(many=False)
-  class Meta:
-    model = Show
-    fields = ['id', 'venue', 'presale_link', 'has_presale', 'show_date_time', 'thumbnail', 'images']
+    venue = VenueSerializer(read_only=True)
+    location = serializers.CharField(read_only=True)
+    full_address = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = Show
+        fields = ['id', 'venue', 'doors_at', 'starts_at', 'ticket_price',
+                'presale_link', 'has_presale', 'age_restriction',
+                'supporting_acts', 'description', 'flyer', 'location', 'full_address']

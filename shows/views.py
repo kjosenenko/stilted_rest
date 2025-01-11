@@ -1,6 +1,6 @@
 from django.http import JsonResponse
-from .managers import ShowManager
 from .serializers import ShowSerializer, ShowsSerializer
+from .managers import ShowManager
 from bands.managers import BandManager
 
 def shows(request):
@@ -9,7 +9,8 @@ def shows(request):
     if not band:
       return JsonResponse({"error": "Band not found."}, status=404)
     else:
-      serializer = ShowsSerializer(ShowManager.shows_for_band(band), many=True)
+      shows = ShowManager.shows_for_band(band)
+      serializer = ShowsSerializer(shows, many=True, context={'request': request})
       return JsonResponse(serializer.data, safe=False)
     
 def show(request, id):
@@ -18,5 +19,5 @@ def show(request, id):
     if not show:
       return JsonResponse({"error": "Show not found."}, status=404)
     else:
-      serializer = ShowSerializer(show)
+      serializer = ShowSerializer(show, context={'request': request})
       return JsonResponse(serializer.data, safe=False)

@@ -1,22 +1,47 @@
 from django.db import models
-from django_cryptography.fields import encrypt
-from images.models import Image
-from django.contrib.contenttypes.fields import GenericRelation
+import os
+
+def band_logo_path(instance, filename):
+    """Generate path for band logos"""
+    ext = filename.split('.')[-1]
+    return f'bands/{instance.name}/logo.{ext}'
+
+def band_cover_path(instance, filename):
+    """Generate path for band cover photos"""
+    ext = filename.split('.')[-1]
+    return f'bands/{instance.name}/cover.{ext}'
+
+def band_gallery_path(instance, filename):
+    """Generate path for band gallery images"""
+    return f'bands/{instance.name}/gallery/{filename}'
 
 class Band(models.Model):
-  name = models.CharField(max_length=128, blank=True, null=True, unique=True)
-  url = models.CharField(max_length=128, blank=True, null=True, unique=True)
-  email = models.CharField(max_length=128, blank=True, null=True, unique=True)
-  email_password = encrypt(models.CharField(max_length=128, blank=True, null=True))
-  smtp_server = models.CharField(max_length=128, blank=True, null=True)
-  smtp_port = models.IntegerField(blank=True, null=True)
-  bio = models.TextField(blank=True)
-  cover_photo = models.ForeignKey(Image, on_delete=models.CASCADE, null=True, blank=True, default=None, related_name="cover_photos")
-  logo = models.ForeignKey(Image, on_delete=models.CASCADE, null=True, blank=True, default=None, related_name="logos")
-  images = GenericRelation(Image)
-  using_react = models.BooleanField(default=False)
-  created_at = models.DateTimeField(auto_now_add=True)
-  updated_at = models.DateTimeField(auto_now=True)
+    name = models.CharField(max_length=128, unique=True)
+    url = models.URLField(blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    email_password = models.CharField(max_length=128, blank=True, null=True)
+    smtp_server = models.CharField(max_length=128, blank=True, null=True)
+    smtp_port = models.IntegerField(blank=True, null=True)
+    
+    # Image fields
+    logo = models.ImageField(upload_to=band_logo_path, blank=True, null=True)
+    logo_alt = models.CharField(max_length=128, blank=True, help_text="Alt text for the band's logo")
+    cover_photo = models.ImageField(upload_to=band_cover_path, blank=True, null=True)
+    cover_photo_alt = models.CharField(max_length=128, blank=True, help_text="Alt text for the band's cover photo")
 
-  def __str__(self):
-    return self.name
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    def delete(self, *args, **kwargs):
+        # Delete image files when band is deleted
+        if self.logo:
+            if os.path.isfile(self.logo.path):
+                os.remove(self.logo.path)
+        if self.cover_photo:
+            if os.path.isfile(self.cover_photo.path):
+                os.remove(self.cover_photo.path)
+        super().delete(*args, **kwargs)

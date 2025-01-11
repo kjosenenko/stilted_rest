@@ -44,15 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'shows',
     'corsheaders',
+    'rest_framework',
     'bands',
     'contacts',
     'members',
-    'images',
-    'music',
+    'shows',
     'social_media',
+    'music',
 ]
 
 MIDDLEWARE = [

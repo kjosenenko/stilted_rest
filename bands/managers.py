@@ -1,24 +1,21 @@
 from django.db import models
 from .models import Band
-from images.serializers import ImageSerializer
 
 class BandManager(models.Manager):
   
   @staticmethod
   def find_by_request(request):
-    
-    # Comment in below to test in browser, you'll need to create a band named "Stilted" first
-    # band = Band.objects.get(name='Stilted')
-    # return band
-
     try:
-      # This would be from the react app.
-      host = request.headers['X-Forwarded-Host']
-    except:
-      # This would be from a vue app.
-      host = request.headers['Origin']
-    try:
-      band = Band.objects.get(url=host)
-      return band
-    except:
+      # Get Origin header which is automatically set by browser
+      origin = request.headers.get('Origin', '')
+      if origin:
+        return Band.objects.get(url=origin)
+      
+      # Fallback to host if no Origin (e.g., direct browser request)
+      host = request.get_host()
+      if 'localhost' in host:
+        return Band.objects.get(url='http://localhost:5173')
+      return Band.objects.get(url=f'https://{host}')
+      
+    except Band.DoesNotExist:
       return None

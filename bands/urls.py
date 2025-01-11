@@ -1,7 +1,10 @@
-from django.urls import path
-from bands import views
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from . import views
+
+router = DefaultRouter()
+router.register(r'bands', views.BandViewSet)
 
 urlpatterns = [
-  path('band/', views.band),
-  path('band/images', views.images),
+    path('', include(router.urls)),
 ]
