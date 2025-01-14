@@ -16,7 +16,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Base url to serve media files
-MEDIA_URL = '/media/'
+MEDIA_URL = '/api/media/'
 
 # Path where media is stored'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -30,9 +30,9 @@ SECRET_KEY = 'django-insecure-1ann9^h0s(8$e2763$$t&blc8j#06j^=awm*7-jdx&%_)is&v#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['api.stiltedband.com','localhost']
-CSRF_TRUSTED_ORIGINS = ['https://api.stiltedband.com', 'http://localhost:5173']
-CORS_ORIGIN_WHITELIST = ['https://api.stiltedband.com','https://stiltedband.com', 'http://localhost:5173']
+ALLOWED_HOSTS = ['api.stiltedband.com', 'localhost', 'dev.stiltedband.com']
+CSRF_TRUSTED_ORIGINS = ['https://api.stiltedband.com', 'http://localhost:5173', 'http://dev.stiltedband.com']
+CORS_ORIGIN_WHITELIST = ['https://api.stiltedband.com', 'https://stiltedband.com', 'http://localhost:5173', 'http://dev.stiltedband.com']
 
 
 # Application definition
@@ -131,8 +131,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/api/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

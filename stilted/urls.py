@@ -20,14 +20,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('bands.urls')),
-    path('', include('contacts.urls')),
-    path('', include('members.urls')),
-    path('', include('shows.urls')),
-    path('', include('social_media.urls')),
-    path('', include('music.urls')),
-]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+    path('api/admin/', admin.site.urls),
+    path('api/', include('bands.urls')),
+    path('api/', include('contacts.urls')),
+    path('api/', include('members.urls')),
+    path('api/', include('shows.urls')),
+    path('api/', include('social_media.urls')),
+    path('api/', include('music.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
