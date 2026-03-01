@@ -1,5 +1,9 @@
+from typing import Literal
+
 from django.contrib import admin
 from django.utils.html import format_html
+from django.utils.safestring import SafeText
+from django.utils.safestring import SafeText
 from .models import Band
 
 @admin.register(Band)
@@ -7,7 +11,7 @@ class BandAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'url', 'has_logo', 'has_cover')
     search_fields = ('name', 'email')
     readonly_fields = ('logo_preview', 'cover_photo_preview')
-    fieldsets = (
+    fieldsets: tuple[tuple[None, dict], tuple[Literal['Email Configuration'], dict], tuple[Literal['Logo'], dict], tuple[Literal['Cover Photo'], dict]] = (
         (None, {
             'fields': ('name', 'url', 'bio')
         }),
@@ -26,27 +30,31 @@ class BandAdmin(admin.ModelAdmin):
         })
     )
     
-    def has_logo(self, obj):
+    def has_logo(self, obj: Band) -> bool:
         return bool(obj.logo)
     has_logo.boolean = True
     
-    def has_cover(self, obj):
+    def has_cover(self, obj: Band) -> bool:
         return bool(obj.cover_photo)
     has_cover.boolean = True
 
-    def logo_preview(self, obj):
+    def logo_preview(self, obj: Band) -> SafeText | str:
         if obj.logo:
             return format_html('<img src="{}" style="max-height: 100px;" />', obj.logo.url)
         return "No logo uploaded"
     logo_preview.short_description = 'Logo Preview'
 
-    def cover_photo_preview(self, obj):
+    def cover_photo_preview(self, obj: Band) -> SafeText | str:
         if obj.cover_photo:
             return format_html('<img src="{}" style="max-height: 200px;" />', obj.cover_photo.url)
         return "No cover photo uploaded"
     cover_photo_preview.short_description = 'Cover Photo Preview'
 
-    def save_model(self, request, obj, form, change):
+    from django.http import HttpRequest
+    from django.contrib.admin.options import ModelAdmin
+    from django.forms import ModelForm
+
+    def save_model(self, request: HttpRequest, obj: Band, form: 'ModelForm', change: bool) -> None:
         # Handle image deletion
         if 'logo' in form.cleaned_data and not form.cleaned_data['logo']:
             # Logo was cleared

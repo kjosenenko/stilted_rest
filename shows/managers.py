@@ -6,8 +6,8 @@ fs = FileSystemStorage(location="/tmp/pyhon_media")
 
 class ShowManager(models.Manager):
   
-  def get_by_id(id):
+  def get_by_id(id: int) -> Show:
     return Show.objects.get(id=id)
   
-  def shows_for_band(band):
+  def shows_for_band(band: Band) -> models.BaseManager[Show]:
     return Show.objects.filter(band=band).order_by('-starts_at')

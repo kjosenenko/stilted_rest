@@ -4,4 +4,4 @@ from .models import Member
 class MemberSerializer(serializers.ModelSerializer):
   class Meta:
     model = Member
-    fields = ['id', 'name', 'instrument', 'bio']
+    fields: list[str] = ['id', 'name', 'instrument', 'bio']

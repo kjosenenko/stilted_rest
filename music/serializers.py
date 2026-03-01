@@ -6,11 +6,12 @@ class MusicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Music
-        fields = ['id', 'name', 'embed_url', 'bandcamp_url']
+        fields: list[str] = ['id', 'name', 'embed_url', 'bandcamp_url']
 
-    def get_embed_url(self, obj):
+    from .models import Music
+    def get_embed_url(self, obj: Music) -> str:
         base_url = "https://bandcamp.com/EmbeddedPlayer"
-        params = {
+        params: dict[str, str] = {
             'size': 'large',
             'bgcol': '333333',
             'linkcol': 'e32c14',
@@ -25,5 +26,5 @@ class MusicSerializer(serializers.ModelSerializer):
             params['track'] = obj.track_id
             params['tracklist'] = 'false'
 
-        param_string = '/'.join(f"{k}={v}" for k, v in params.items())
+        param_string: str = '/'.join(f"{k}={v}" for k, v in params.items())
         return f"{base_url}/{param_string}/"

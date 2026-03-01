@@ -4,7 +4,7 @@ from .models import Show, Venue
 class VenueSerializer(serializers.ModelSerializer):
     class Meta:
         model = Venue
-        fields = ['id', 'name', 'street_address', 'city', 'state', 
+        fields: list[str] = ['id', 'name', 'street_address', 'city', 'state', 
                  'zip_code', 'website', 'notes']
 
 class ShowsSerializer(serializers.ModelSerializer):
@@ -14,7 +14,7 @@ class ShowsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Show
-        fields = ['id', 'venue', 'doors_at', 'starts_at', 'ticket_price',
+        fields: list[str] = ['id', 'venue', 'doors_at', 'starts_at', 'ticket_price',
                 'presale_link', 'has_presale', 'age_restriction',
                 'supporting_acts', 'description', 'flyer', 'location', 'full_address']
 
@@ -25,6 +25,6 @@ class ShowSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Show
-        fields = ['id', 'venue', 'doors_at', 'starts_at', 'ticket_price',
+        fields: list[str] = ['id', 'venue', 'doors_at', 'starts_at', 'ticket_price',
                 'presale_link', 'has_presale', 'age_restriction',
                 'supporting_acts', 'description', 'flyer', 'location', 'full_address']

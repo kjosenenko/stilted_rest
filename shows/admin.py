@@ -1,5 +1,9 @@
+from typing import Literal
+
 from django.contrib import admin
 from django.utils.html import format_html
+from django.utils.safestring import SafeText
+from django.utils.safestring import SafeText
 from .models import Show, Venue
 
 @admin.register(Venue)
@@ -9,7 +13,7 @@ class VenueAdmin(admin.ModelAdmin):
     search_fields = ('name', 'city')
     ordering = ('name',)
 
-    def website_link(self, obj):
+    def website_link(self, obj: Venue) -> SafeText | str:
         if obj.website:
             return format_html('<a href="{}" target="_blank">Visit Website</a>', obj.website)
         return "-"
@@ -20,9 +24,9 @@ class ShowAdmin(admin.ModelAdmin):
     list_display = ('starts_at', 'venue', 'doors_display', 'ticket_price', 'has_presale', 'flyer_preview')
     list_filter = ('venue', 'starts_at')
     search_fields = ('venue__name', 'description', 'supporting_acts')
-    autocomplete_fields = ['venue']
+    autocomplete_fields: list[str] = ['venue']
     
-    fieldsets = (
+    fieldsets: tuple[tuple[None, dict], tuple[Literal['Show Media'], dict], tuple[Literal['Ticket Information'], dict], tuple[Literal['Additional Information'], dict]] = (
         (None, {
             'fields': ('band', 'venue', ('doors_at', 'starts_at'))
         }),
@@ -38,12 +42,12 @@ class ShowAdmin(admin.ModelAdmin):
         }),
     )
 
-    def flyer_preview(self, obj):
+    def flyer_preview(self, obj: Show) -> SafeText | str:
         if obj.flyer:
             return format_html('<img src="{}" style="max-height: 50px;" />', obj.flyer.url)
         return "-"
     flyer_preview.short_description = 'Flyer'
 
-    def doors_display(self, obj):
+    def doors_display(self, obj: Show) -> str:
         return obj.doors_at.strftime('%I:%M %p') if obj.doors_at else '-'
     doors_display.short_description = 'Doors'

@@ -4,5 +4,5 @@ from shows.managers import ShowManager
 class Command(BaseCommand):
     help = 'Remove images for past shows'
 
-    def handle(self, *args, **kwargs):
+    def handle(self, *args: object, **kwargs: object) -> None:
       ShowManager.cleanup()

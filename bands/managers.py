@@ -4,7 +4,7 @@ from .models import Band
 class BandManager(models.Manager):
   
   @staticmethod
-  def find_by_request(request):
+  def find_by_request(request: HttpRequest) -> Band | None:
     try:
       # Get Origin header which is automatically set by browser
       origin = request.headers.get('Origin', '')

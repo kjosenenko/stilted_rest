@@ -1,12 +1,15 @@
+from django.db.models.manager import BaseManager
 from django.http import JsonResponse
 from rest_framework import viewsets
 from .serializers import BandSerializer
 from .models import Band
 from .managers import BandManager
 
-def band(request):
+from django.http import HttpRequest
+
+def band(request: HttpRequest) -> JsonResponse | None:
   if request.method == 'GET':
-    band = BandManager.find_by_request(request)
+    band: Band | None = BandManager.find_by_request(request)
     if not band:
       return JsonResponse({"error": "Band not found."}, status=404)
     else:
@@ -14,5 +17,7 @@ def band(request):
       return JsonResponse(serializer.data, safe=False)
 
 class BandViewSet(viewsets.ModelViewSet):
-    queryset = Band.objects.all()
+    queryset: BaseManager[Band] = Band.objects.all()
     serializer_class = BandSerializer
+
+      # If you have custom methods, add type hints for their arguments as well

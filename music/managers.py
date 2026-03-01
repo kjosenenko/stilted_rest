@@ -5,5 +5,5 @@ from .models import Music
 
 class MusicManager(models.Manager):
   
-  def music_for_band(band):
+  def music_for_band(band: Band) -> models.BaseManager[Music]:
     return Music.objects.filter(band=band)

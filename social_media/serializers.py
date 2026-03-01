@@ -4,4 +4,4 @@ from .models import SocialMedia
 class SocialMediaSerializer(serializers.ModelSerializer):
   class Meta:
     model = SocialMedia
-    fields = ['id', 'provider', 'href']
+    fields: list[str] = ['id', 'provider', 'href']

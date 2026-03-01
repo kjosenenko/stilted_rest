@@ -7,17 +7,17 @@ from email.mime.multipart import MIMEMultipart
 class ContactManager(models.Manager):
 
   @staticmethod
-  def forward_to_band(form):
-    band = Band.objects.get(id=form.data['band_id'])
+  def forward_to_band(form: Form) -> None:
+    band: Band = Band.objects.get(id=form.data['band_id'])
     
     if form.data['add_to_mailer']:
       band.contact_set.create(name=form.data['name'],email=form.data['email'],phone=form.data['phone'])
       
-    port = band.smtp_port
-    smtp_server = band.smtp_server
-    sender_email = band.email
-    receiver_email = band.email
-    password = band.email_password
+    port: int | None = band.smtp_port
+    smtp_server: str | None = band.smtp_server
+    sender_email: str | None = band.email
+    receiver_email: str | None = band.email
+    password: str | None = band.email_password
     message = MIMEMultipart("alternative")
     message["Subject"] = form.data['message_subject']
     message["From"] = sender_email
@@ -60,16 +60,16 @@ class ContactManager(models.Manager):
     message.attach(part2)
     
     try:
-        # Create connection with server and send email
-        context = ssl.create_default_context()
-        server = smtplib.SMTP(smtp_server, port)
-        server.ehlo()  # Can be omitted
-        server.starttls(context=context)  # Secure the connection
-        server.ehlo()  # Can be omitted
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, message.as_string())
+      # Create connection with server and send email
+      context: smtplib.SSLContext = ssl.create_default_context()
+      server = smtplib.SMTP(smtp_server, port)
+      server.ehlo()  # Can be omitted
+      server.starttls(context=context)  # Secure the connection
+      server.ehlo()  # Can be omitted
+      server.login(sender_email, password)
+      server.sendmail(sender_email, receiver_email, message.as_string())
     except Exception as e:
-        print(f"Error sending email: {e}")
-        raise
+      print(f"Error sending email: {e}")
+      raise
     finally:
-        server.quit()
+      server.quit()

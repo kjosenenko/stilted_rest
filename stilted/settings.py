@@ -13,13 +13,13 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR: Path = Path(__file__).resolve().parent.parent
 
 # Base url to serve media files
 MEDIA_URL = '/api/media/'
 
 # Path where media is stored'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT: Path = BASE_DIR / 'media'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -30,14 +30,14 @@ SECRET_KEY = 'django-insecure-1ann9^h0s(8$e2763$$t&blc8j#06j^=awm*7-jdx&%_)is&v#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['api.stiltedband.com', 'localhost', 'dev.stiltedband.com']
-CSRF_TRUSTED_ORIGINS = ['https://api.stiltedband.com', 'http://localhost:5173', 'http://dev.stiltedband.com']
-CORS_ORIGIN_WHITELIST = ['https://api.stiltedband.com', 'https://stiltedband.com', 'http://localhost:5173', 'http://dev.stiltedband.com']
+ALLOWED_HOSTS: list[str] = ['api.stiltedband.com', 'localhost', 'dev.stiltedband.com']
+CSRF_TRUSTED_ORIGINS: list[str] = ['https://api.stiltedband.com', 'http://localhost:5173', 'http://dev.stiltedband.com']
+CORS_ORIGIN_WHITELIST: list[str] = ['https://api.stiltedband.com', 'https://stiltedband.com', 'http://localhost:5173', 'http://dev.stiltedband.com']
 
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS: list[str] = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'music',
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE: list[str] = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -100,7 +100,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
+AUTH_PASSWORD_VALIDATORS: list[dict[str, str]] = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -132,8 +132,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/api/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [
+STATIC_ROOT: Path = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS: list[Path] = [
     BASE_DIR / "static",
 ]
 
