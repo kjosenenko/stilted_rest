@@ -17,7 +17,7 @@ class VenueAdmin(admin.ModelAdmin):
         if obj.website:
             return format_html('<a href="{}" target="_blank">Visit Website</a>', obj.website)
         return "-"
-    website_link.short_description = 'Website'
+    website_link.short_description = 'Website'  # type: ignore[attr-defined]
 
 @admin.register(Show)
 class ShowAdmin(admin.ModelAdmin):
@@ -46,8 +46,8 @@ class ShowAdmin(admin.ModelAdmin):
         if obj.flyer:
             return format_html('<img src="{}" style="max-height: 50px;" />', obj.flyer.url)
         return "-"
-    flyer_preview.short_description = 'Flyer'
+    flyer_preview.short_description = 'Flyer'  # type: ignore[attr-defined]
 
     def doors_display(self, obj: Show) -> str:
         return obj.doors_at.strftime('%I:%M %p') if obj.doors_at else '-'
-    doors_display.short_description = 'Doors'
+    doors_display.short_description = 'Doors'  # type: ignore[attr-defined]

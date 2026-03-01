@@ -14,3 +14,5 @@ def social_media(request: HttpRequest) -> JsonResponse | None:
     else:
       serializer = SocialMediaSerializer(SocialMediaManager.social_media_for_band(band), many=True)
       return JsonResponse(serializer.data, safe=False)
+
+  return None

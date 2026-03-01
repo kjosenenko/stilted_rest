@@ -42,7 +42,7 @@ class Band(models.Model):
     updated_at: models.DateTimeField[datetime] = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return self.name
+        return self.name or ""
 
     def delete(self, *args: object, **kwargs: object) -> None:
         # Delete image files when band is deleted

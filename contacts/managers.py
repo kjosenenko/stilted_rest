@@ -4,6 +4,9 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+
+from django.forms import Form
+
 class ContactManager(models.Manager):
 
   @staticmethod
@@ -61,6 +64,7 @@ class ContactManager(models.Manager):
     
     try:
       # Create connection with server and send email
+      import smtplib
       context: smtplib.SSLContext = ssl.create_default_context()
       server = smtplib.SMTP(smtp_server, port)
       server.ehlo()  # Can be omitted

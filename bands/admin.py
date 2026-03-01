@@ -32,23 +32,23 @@ class BandAdmin(admin.ModelAdmin):
     
     def has_logo(self, obj: Band) -> bool:
         return bool(obj.logo)
-    has_logo.boolean = True
+    has_logo.boolean = True  # type: ignore[attr-defined]
     
     def has_cover(self, obj: Band) -> bool:
         return bool(obj.cover_photo)
-    has_cover.boolean = True
+    has_cover.boolean = True  # type: ignore[attr-defined]
 
     def logo_preview(self, obj: Band) -> SafeText | str:
         if obj.logo:
             return format_html('<img src="{}" style="max-height: 100px;" />', obj.logo.url)
         return "No logo uploaded"
-    logo_preview.short_description = 'Logo Preview'
+    logo_preview.short_description = 'Logo Preview'  # type: ignore[attr-defined]
 
     def cover_photo_preview(self, obj: Band) -> SafeText | str:
         if obj.cover_photo:
             return format_html('<img src="{}" style="max-height: 200px;" />', obj.cover_photo.url)
         return "No cover photo uploaded"
-    cover_photo_preview.short_description = 'Cover Photo Preview'
+    cover_photo_preview.short_description = 'Cover Photo Preview'  # type: ignore[attr-defined]
 
     from django.http import HttpRequest
     from django.contrib.admin.options import ModelAdmin

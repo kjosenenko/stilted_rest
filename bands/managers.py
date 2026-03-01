@@ -1,5 +1,6 @@
 from django.db import models
 from .models import Band
+from django.http import HttpRequest
 
 class BandManager(models.Manager):
   

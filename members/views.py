@@ -14,5 +14,4 @@ def members(request: HttpRequest) -> JsonResponse:
     else:
       serializer = MemberSerializer(MemberManager.band_members(band), many=True)
       return JsonResponse(serializer.data, safe=False)
-  else:
-    return JsonResponse(serializer.errors, status=400)
+  return JsonResponse({"error": "Invalid request method."}, status=400)

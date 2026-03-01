@@ -20,6 +20,8 @@ def shows(request: HttpRequest) -> JsonResponse | None:
       shows: BaseManager[Show] = ShowManager.shows_for_band(band)
       serializer = ShowsSerializer(shows, many=True, context={'request': request})
       return JsonResponse(serializer.data, safe=False)
+
+  return None
     
 def show(request: HttpRequest, id: int) -> JsonResponse | None:
   if request.method == 'GET':
@@ -29,3 +31,5 @@ def show(request: HttpRequest, id: int) -> JsonResponse | None:
     else:
       serializer = ShowSerializer(show, context={'request': request})
       return JsonResponse(serializer.data, safe=False)
+
+  return None

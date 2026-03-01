@@ -23,3 +23,5 @@ def music(request: HttpRequest) -> JsonResponse | None:
       logger.info(f"Found {music_list.count()} music items for band {band.name}")
       serializer = MusicSerializer(music_list, many=True)
       return JsonResponse(serializer.data, safe=False)
+
+  return None

@@ -13,5 +13,5 @@ class Contact(models.Model):
   updated_at: models.DateTimeField[datetime] = models.DateTimeField(auto_now=True)
   band: models.ForeignKey[Band] = models.ForeignKey(Band, on_delete=models.CASCADE)
   
-  def __str__(self) -> str | None:
-    return self.name
+  def __str__(self) -> str:
+    return self.name or ""

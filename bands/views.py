@@ -16,6 +16,8 @@ def band(request: HttpRequest) -> JsonResponse | None:
       serializer = BandSerializer(band, context={'request': request})
       return JsonResponse(serializer.data, safe=False)
 
+  return None
+
 class BandViewSet(viewsets.ModelViewSet):
     queryset: BaseManager[Band] = Band.objects.all()
     serializer_class = BandSerializer

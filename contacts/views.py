@@ -26,4 +26,6 @@ def contact(request: HttpRequest) -> JsonResponse | None:
       ContactManager.forward_to_band(form)
       return JsonResponse(data, status=202)
     else:
-      return JsonResponse(form.errors, status=406)
+        return JsonResponse(form.errors, status=406)
+
+    return None
