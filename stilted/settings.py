@@ -46,6 +46,7 @@ INSTALLED_APPS: list[str] = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'drf_spectacular',
     'bands',
     'contacts',
     'members',
@@ -141,3 +142,16 @@ STATICFILES_DIRS: list[Path] = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# REST Framework configuration
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+# drf-spectacular settings
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Stilted Band API',
+    'DESCRIPTION': 'API for managing band information, shows, members, contacts, social media, and music',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
