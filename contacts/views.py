@@ -28,4 +28,5 @@ def contact(request: HttpRequest) -> JsonResponse | None:
     else:
         return JsonResponse(form.errors, status=406)
 
-    return None
+  # Return a 405 Method Not Allowed for non-POST requests
+  return JsonResponse({"error": "Method not allowed."}, status=405)
