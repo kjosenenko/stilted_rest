@@ -3,6 +3,8 @@ from django.db.models.manager import BaseManager
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 from bands.models import Band
 
@@ -13,6 +15,12 @@ from .serializers import ShowSerializer, ShowsSerializer
 from .managers import ShowManager
 from bands.managers import BandManager
 
+@swagger_auto_schema(
+    method='get',
+    operation_description='Get all shows for a band',
+    responses={200: ShowsSerializer(many=True), 404: 'Band not found'},
+    tags=['shows']
+)
 @api_view(['GET'])
 def shows(request: HttpRequest) -> Response:
   band: Band | None = BandManager.find_by_request(request)
@@ -22,7 +30,13 @@ def shows(request: HttpRequest) -> Response:
   shows: BaseManager[Show] = ShowManager().shows_for_band(band)
   serializer = ShowsSerializer(shows, many=True, context={'request': request})
   return Response(serializer.data)
-    
+
+@swagger_auto_schema(
+    method='get',
+    operation_description='Get a specific show by ID',
+    responses={200: ShowSerializer(), 404: 'Show not found'},
+    tags=['shows']
+)
 @api_view(['GET'])
 def show(request: HttpRequest, id: int) -> Response:
   show: Show | None = ShowManager().get_by_id(id)
